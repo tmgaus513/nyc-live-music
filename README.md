@@ -3,7 +3,7 @@
 A rolling four-week calendar of jazz, improvised, and DIY live music in New York City.
 Every listing carries a price and a direct ticket link.
 
-**Live site:** _(fill in once GitHub Pages is enabled)_
+**Live site:** https://tmgaus513.github.io/nyc-live-music/
 
 ## What's in here
 
