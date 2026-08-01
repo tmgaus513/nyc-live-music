@@ -4,7 +4,7 @@
   "description": "A rolling four-week calendar of jazz, improvised and DIY live music in New York City, with a ticket link and a price on every listing.",
   "start_url": "./",
   "scope": "./",
-  "id": "/nyc-live-music/",
+  "id": "/",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui", "browser"],
   "orientation": "any",
