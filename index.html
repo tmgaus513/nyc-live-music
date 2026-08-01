@@ -129,6 +129,28 @@ details.note .notebody{margin-top:8px}
   .tbar .chip{padding:3px 9px;font-size:11.5px}
 }
 </style>
+<meta name="description" content="A rolling four-week calendar of jazz, improvised and DIY live music in New York City, with a ticket link and a price on every listing.">
+<meta name="theme-color" content="#faf9f7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="NYC Live">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png">
+<style>
+#installbtn{position:fixed;right:14px;bottom:14px;z-index:60;display:none;align-items:center;gap:7px;
+  background:#1a1a1a;color:#fff;border:none;border-radius:22px;padding:10px 16px;font:600 13px/1 inherit;
+  cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.24)}
+#installbtn:hover{background:#000}
+#installtip{position:fixed;right:14px;bottom:14px;z-index:60;display:none;max-width:270px;
+  background:#1a1a1a;color:#fff;border-radius:12px;padding:12px 14px;font:400 12.5px/1.45 inherit;
+  box-shadow:0 4px 14px rgba(0,0,0,.24)}
+#installtip b{font-weight:700}
+#installtip button{margin-top:8px;background:none;border:1px solid rgba(255,255,255,.35);color:#fff;
+  border-radius:6px;padding:4px 10px;font:600 11px/1 inherit;cursor:pointer}
+@media print{#installbtn,#installtip{display:none!important}}
+</style>
 </head>
 <body>
 <header>
@@ -1567,6 +1589,47 @@ if(daysOld > 8){
   document.querySelector("main").prepend(b);
 }
 render();
+</script>
+<button id="installbtn" type="button">&#8595;&nbsp;Install app</button>
+<div id="installtip"><b>Add to your Home Screen</b><br>Tap the Share button in Safari, then choose &ldquo;Add to Home Screen&rdquo;.<br><button type="button" id="installtipx">Got it</button></div>
+<script>
+(function(){
+  var https = location.protocol === 'https:';
+  if (https && 'serviceWorker' in navigator) {
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('./sw.js').catch(function(){});
+    });
+  }
+  var standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  if (!https || standalone) return;
+
+  var btn = document.getElementById('installbtn');
+  var tip = document.getElementById('installtip');
+  var deferred = null;
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault(); deferred = e; btn.style.display = 'flex';
+  });
+  btn.addEventListener('click', function(){
+    if (!deferred) return;
+    btn.style.display = 'none';
+    deferred.prompt();
+    deferred.userChoice.finally(function(){ deferred = null; });
+  });
+  window.addEventListener('appinstalled', function(){ btn.style.display='none'; deferred=null; });
+
+  // iOS Safari never fires beforeinstallprompt, so show the manual steps instead.
+  var ua = navigator.userAgent;
+  var iOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var safari = /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS|OPiOS/.test(ua);
+  try {
+    if (iOS && safari && !sessionStorage.getItem('nyclm-tip')) tip.style.display = 'block';
+  } catch (err) {}
+  document.getElementById('installtipx').addEventListener('click', function(){
+    tip.style.display = 'none';
+    try { sessionStorage.setItem('nyclm-tip','1'); } catch (err) {}
+  });
+})();
 </script>
 </body>
 </html>

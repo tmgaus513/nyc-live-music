@@ -1,0 +1,21 @@
+{
+  "name": "NYC Live Music",
+  "short_name": "NYC Live",
+  "description": "A rolling four-week calendar of jazz, improvised and DIY live music in New York City, with a ticket link and a price on every listing.",
+  "start_url": "./",
+  "scope": "./",
+  "id": "/nyc-live-music/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "any",
+  "background_color": "#faf9f7",
+  "theme_color": "#faf9f7",
+  "categories": ["music", "entertainment", "lifestyle"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
