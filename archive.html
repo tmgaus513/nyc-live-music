@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NYC Live Music — Archive</title>
+<meta name="description" content="Every show that has appeared on the NYC live music calendar since July 2026, with the venue, source and price as published at the time.">
+<meta name="theme-color" content="#faf9f7">
+<link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png">
+<style>
+:root{
+--bg:#faf9f7; --card:#ffffff; --ink:#1a1a1a; --muted:#6b6b6b; --line:#e8e5e0;
+--g-jazz:#b45309; --g-exp:#4f46e5; --g-indie:#dc2626; --g-elec:#0891b2; --g-global:#059669; --g-diy:#c026d3; --g-none:#9ca3af;
+--jg:#2563eb; --drom:#d97706; --nublu:#dc2626; --closeup:#7c3aed;
+--orni:#059669; --lpr:#db2777; --roulette:#64748b; --insta:#c026d3;
+--lowlands:#b45309; --barbes:#be123c; --bayeux:#166534; --lunatico:#7f1d1d; --pubrec:#1e3a8a; --refor:#292524; --smalls:#0e7490; --mezzrow:#6366f1; --vanguard:#92400e; --y92:#0f766e; --pocket:#a21caf; --jc:#65a30d;
+--zinc:#7c2d12; --fivespot:#4d7c0f; --groove:#9333ea; --wha:#b91c1c; --redpav:#be185d; --culturelab:#0d9488; --amant:#57534e; --armory:#1d4ed8; --lotradio:#ea580c; --elsewhere:#7e22ce; --sultan:#c2410c; --tveye:#15803d; --purgatory:#831843; --jupiter:#4338ca; --littlefield:#0369a1; --cassette:#a16207; --cmon:#86198f; --ethels:#047857; --friendslovers:#9f1239; --berlin:#334155; --wonderville:#6d28d9; --double:#1e40af; --pinkfrog:#e11d48; --milagrosa:#0f766e; --r360:#3f6212;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
+header{position:sticky;top:0;z-index:10;background:rgba(250,249,247,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:16px 20px 12px}
+h1{font-size:20px;font-weight:700;letter-spacing:-.02em}
+h1 a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:600;margin-left:10px}
+h1 a:hover{color:var(--ink);text-decoration:underline}
+.sub{font-size:12.5px;color:var(--muted);margin-top:2px}
+.bar{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;align-items:center}
+.bar .lbl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:2px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:4px 12px;font-size:12.5px;cursor:pointer;user-select:none;display:inline-flex;align-items:center;gap:6px;transition:all .12s}
+.chip .dot{width:8px;height:8px;border-radius:50%}
+.chip.off{opacity:.35}
+.chip:hover{border-color:#bbb}
+.chip.sel{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip .cnt{color:var(--muted);font-weight:400;font-size:11px}
+.chip.sel .cnt{color:rgba(255,255,255,.7)}
+#search{margin-left:auto;border:1px solid var(--line);border-radius:8px;padding:5px 10px;font-size:13px;min-width:180px;background:var(--card)}
+.vpanel{margin-top:9px}
+.vpanel summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--muted);border:1px solid var(--line);background:var(--card);border-radius:999px;padding:3px 12px}
+.vpanel summary::-webkit-details-marker{display:none}
+.vpanel summary::before{content:"\25B8";font-size:10px;transition:transform .15s}
+.vpanel[open] summary::before{transform:rotate(90deg)}
+.vpanel summary:hover{border-color:#bbb}
+.vgroup{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-top:7px}
+.gpill{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#fff;border-radius:4px;padding:2px 6px}
+.vacts{margin-top:8px;display:flex;gap:6px}
+.vacts button{font:inherit;font-size:11.5px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px 11px;cursor:pointer}
+.vacts button:hover{border-color:#bbb}
+main{max-width:860px;margin:0 auto;padding:20px}
+.note{background:#fdf6e9;border:1px solid #f0e3c4;border-radius:10px;padding:12px 14px;font-size:13px;color:#5c4d24;margin-bottom:20px}
+.day{margin-bottom:26px}
+.dayhead{position:sticky;top:var(--hh,0px);z-index:5;background:var(--bg);padding-top:8px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding-bottom:6px;border-bottom:2px solid var(--line);margin-bottom:10px;display:flex;justify-content:space-between;align-items:baseline}
+.dayhead .cnt{font-weight:400;font-size:11.5px}
+.ev{display:flex;gap:14px;padding:10px 12px;background:var(--card);border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
+.ev .time{flex:0 0 92px;font-size:12.5px;color:var(--muted);padding-top:2px}
+.ev .body{flex:1;min-width:0}
+.ev .title{font-size:15px;font-weight:600}
+.ev .title a{color:inherit;text-decoration:none}
+.ev .title a:hover{text-decoration:underline}
+.ev .det{font-size:12.5px;color:var(--muted);margin-top:2px}
+.ev .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;align-items:center}
+.badge{font-size:10.5px;font-weight:700;letter-spacing:.04em;color:#fff;border-radius:4px;padding:2px 7px}
+.src{font-size:10.5px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1.5px 6px}
+.price{font-size:11.5px;color:var(--ink)}
+.gl{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#fff;border-radius:4px;padding:2px 6px}
+.empty{color:var(--muted);font-size:13px;font-style:italic;padding:6px 0}
+.loading{color:var(--muted);font-size:14px;padding:30px 0;text-align:center}
+.more{display:block;margin:14px auto 0;font:inherit;font-size:13px;font-weight:600;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 20px;cursor:pointer}
+.more:hover{border-color:#bbb}
+footer{max-width:860px;margin:0 auto;padding:10px 20px 40px;font-size:11.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header>
+<h1>NYC Live Music — Archive<a href="./">&#8592; back to what's on now</a></h1>
+<div class="sub" id="sub">Loading…</div>
+<div class="bar" id="mbar"></div>
+<div class="bar" id="gbar"></div>
+<details class="vpanel" id="vpanel"><summary id="vsum">Venues</summary><div id="chips"></div></details>
+</header>
+<main>
+<div class="note" id="note"></div>
+<div id="list"><div class="loading">Loading the archive…</div></div>
+</main>
+<footer>Built from every published version of this calendar. Each entry is kept exactly as it was listed at the time, including the price and the source it came from — links to past shows may no longer resolve.</footer>
+<script>
+const GB=[["jazz","Jazz & blues"],["indie","Indie & rock"],["elec","Electronic"],["global","Global"],["exp","Experimental"],["diy","DIY & open mic"],["","Unclassified"]];
+const GNAME={};GB.forEach(([k,v])=>GNAME[k]=v);
+let E=[],VENUES={},META={};
+const active=new Set(),gActive=new Set(GB.map(g=>g[0]));
+let query="",monthSel=null,shown=0;const PAGE=400;
+const esc=s=>String(s==null?"":s).replace(/&(?![a-zA-Z#0-9]+;)/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const hdr=document.querySelector("header");
+function measure(){document.documentElement.style.setProperty("--hh",hdr.offsetHeight+"px")}
+function parseMin(t){if(!t)return 9999;const m=String(t).match(/(\d{1,2})(?::(\d{2}))?/);if(!m)return 9999;let h=parseInt(m[1],10),mi=m[2]?parseInt(m[2],10):0;if(/PM/i.test(t)&&h!==12)h+=12;if(/AM/i.test(t)&&h===12)h=0;if(h<5)h+=24;return h*60+mi}
+function fmtDate(d){return new Date(d+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric",year:"numeric"})}
+function monthKey(d){return d.slice(0,7)}
+function monthName(k){return new Date(k+"-15T12:00:00").toLocaleDateString("en-US",{month:"long",year:"numeric"})}
+
+function filtered(){
+  return E.filter(e=>active.has(e.v))
+    .filter(e=>gActive.has(e.g||""))
+    .filter(e=>!monthSel||monthKey(e.d)===monthSel)
+    .filter(e=>!query||(e.a+" "+(e.det||"")+" "+(VENUES[e.v]||e.v)+" "+(e.p||"")).toLowerCase().includes(query));
+}
+function render(reset){
+  if(reset)shown=0;
+  const rows=filtered();
+  rows.sort((a,b)=> a.d<b.d?1:a.d>b.d?-1:(parseMin(a.t)-parseMin(b.t)));
+  const list=document.getElementById("list");
+  if(!rows.length){list.innerHTML='<div class="empty">Nothing in the archive matches those filters.</div>';return}
+  shown=Math.min(rows.length,(shown||0)+PAGE);
+  const slice=rows.slice(0,shown);
+  const byDate={};slice.forEach(e=>{(byDate[e.d]=byDate[e.d]||[]).push(e)});
+  const dates=Object.keys(byDate).sort().reverse();
+  list.innerHTML=dates.map(d=>{return '<section class="day"><div class="dayhead"><span>'+fmtDate(d)+'</span><span class="cnt">'+byDate[d].length+' show'+(byDate[d].length>1?'s':'')+'</span></div>'+
+    byDate[d].map(e=>{
+      const vn=VENUES[e.v]||e.v, col='var(--'+e.v+')';
+      return '<div class="ev"><div class="time">'+esc(e.t||"")+'</div><div class="body">'+
+        '<div class="title">'+(e.u?'<a href="'+esc(e.u)+'" target="_blank" rel="noopener">'+esc(e.a)+'</a>':esc(e.a))+'</div>'+
+        (e.det?'<div class="det">'+esc(e.det)+'</div>':'')+
+        '<div class="meta"><span class="badge" style="background:'+col+'">'+esc(vn)+'</span>'+
+        '<span class="gl" style="background:var(--g-'+(e.g||'none')+')">'+esc((GNAME[e.g||""]||"").replace(/ &.*| and .*/,""))+'</span>'+
+        (e.s?'<span class="src">'+esc(e.s)+'</span>':'')+
+        '<span class="price">'+esc(e.p||"no price published")+'</span></div>'+
+        '</div></div>';
+    }).join("")+'</section>';
+  }).join("");
+  if(shown<rows.length){
+    const b=document.createElement("button");
+    b.className="more";b.textContent="Show "+Math.min(PAGE,rows.length-shown)+" more ("+(rows.length-shown)+" left)";
+    b.onclick=()=>render(false);
+    list.appendChild(b);
+  }
+  document.getElementById("sub").innerHTML=rows.length.toLocaleString()+" shows"+(rows.length<E.length?" of "+E.length.toLocaleString():"")+
+    " · "+META.range+" · built from "+META.snapshots+" published versions of this calendar";
+  measure();
+}
+function buildChips(){
+  // months
+  const mbar=document.getElementById("mbar");
+  const months={};E.forEach(e=>{const k=monthKey(e.d);months[k]=(months[k]||0)+1});
+  mbar.innerHTML='<span class="lbl">Month</span>';
+  const allc=document.createElement("span");
+  allc.className="chip sel";allc.textContent="All";
+  allc.onclick=()=>{monthSel=null;[...mbar.querySelectorAll(".chip")].forEach(x=>x.classList.remove("sel"));allc.classList.add("sel");render(true);window.scrollTo({top:0})};
+  mbar.appendChild(allc);
+  Object.keys(months).sort().reverse().forEach(k=>{
+    const c=document.createElement("span");
+    c.className="chip";
+    c.innerHTML=monthName(k)+' <span class="cnt">'+months[k]+'</span>';
+    c.onclick=()=>{monthSel=k;[...mbar.querySelectorAll(".chip")].forEach(x=>x.classList.remove("sel"));c.classList.add("sel");render(true);window.scrollTo({top:0})};
+    mbar.appendChild(c);
+  });
+  // genres
+  const gbar=document.getElementById("gbar");
+  const gc={};E.forEach(e=>{const k=e.g||"";gc[k]=(gc[k]||0)+1});
+  gbar.innerHTML='<span class="lbl">Genre</span>';
+  GB.filter(g=>gc[g[0]]).forEach(([k,label])=>{
+    const c=document.createElement("span");
+    c.className="chip";
+    c.innerHTML='<span class="dot" style="background:var(--g-'+(k||'none')+')"></span>'+label+' <span class="cnt">'+gc[k]+'</span>';
+    c.title="Click to hide; click a lone active genre to show all again";
+    c.onclick=()=>{
+      if(gActive.has(k)&&gActive.size===1){GB.forEach(g=>gActive.add(g[0]));gbar.querySelectorAll(".chip").forEach(x=>x.classList.remove("off"))}
+      else{gActive.has(k)?gActive.delete(k):gActive.add(k);c.classList.toggle("off",!gActive.has(k))}
+      render(true);
+    };
+    gbar.appendChild(c);
+  });
+  const s=document.createElement("input");
+  s.id="search";s.placeholder="Search artists, venues, prices…";
+  s.oninput=e=>{query=e.target.value.toLowerCase();render(true)};
+  gbar.appendChild(s);
+  // venues, grouped by dominant genre
+  const chips=document.getElementById("chips"),vsum=document.getElementById("vsum");
+  const VCOUNT={},VGEN={};
+  Object.keys(VENUES).forEach(k=>{
+    const rows=E.filter(e=>e.v===k);VCOUNT[k]=rows.length;
+    const cnt={};rows.forEach(e=>{const g=e.g||"";cnt[g]=(cnt[g]||0)+1});
+    const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];VGEN[k]=top?top[0]:"";
+  });
+  const VTOTAL=Object.keys(VENUES).length,vchip={};
+  function updateVsum(){vsum.innerHTML='Venues <span class="cnt" style="font-weight:400">'+(active.size===VTOTAL?"all "+VTOTAL:active.size+" of "+VTOTAL)+'</span>'}
+  GB.forEach(([gk,glabel])=>{
+    const keys=Object.keys(VENUES).filter(k=>VGEN[k]===gk).sort((a,b)=>VCOUNT[b]-VCOUNT[a]);
+    if(!keys.length)return;
+    const row=document.createElement("div");row.className="vgroup";
+    const gl=document.createElement("span");gl.className="gpill";gl.style.background="var(--g-"+(gk||"none")+")";
+    gl.textContent=glabel.replace(/ &.*| and .*/,"");row.appendChild(gl);
+    keys.forEach(k=>{
+      const c=document.createElement("span");c.className="chip";
+      c.innerHTML='<span class="dot" style="background:var(--'+k+')"></span>'+esc(VENUES[k])+' <span class="cnt">'+VCOUNT[k]+'</span>';
+      c.onclick=()=>{active.has(k)?active.delete(k):active.add(k);c.classList.toggle("off",!active.has(k));updateVsum();render(true)};
+      vchip[k]=c;row.appendChild(c);
+    });
+    chips.appendChild(row);
+  });
+  const acts=document.createElement("div");acts.className="vacts";
+  const bAll=document.createElement("button");bAll.textContent="Select all";
+  bAll.onclick=()=>{Object.keys(VENUES).forEach(k=>active.add(k));Object.values(vchip).forEach(c=>c.classList.remove("off"));updateVsum();render(true)};
+  const bNone=document.createElement("button");bNone.textContent="Clear all";
+  bNone.onclick=()=>{active.clear();Object.values(vchip).forEach(c=>c.classList.add("off"));updateVsum();render(true)};
+  acts.appendChild(bAll);acts.appendChild(bNone);chips.appendChild(acts);
+  updateVsum();
+}
+fetch("./archive.json").then(r=>r.json()).then(j=>{
+  E=j.events;VENUES=j.venues;
+  Object.keys(VENUES).forEach(k=>active.add(k));
+  const ds=E.map(e=>e.d).sort();
+  META={range:fmtDate(ds[0]).replace(/^\w+, /,"")+" – "+fmtDate(ds[ds.length-1]).replace(/^\w+, /,""),snapshots:13};
+  document.getElementById("note").innerHTML=
+    "<strong>What this is.</strong> Every show that has appeared on this calendar, kept as it was listed at the time — same venue, same source, same price. Shows are not re-checked after the fact, so a price here is what the venue published then, and old ticket links may no longer resolve."+
+    "<br><br><strong>One gap.</strong> Nothing is recorded for <strong>Sep 26 – Oct 6, 2026</strong>. The weekly refresh was firing but failing silently at the publish step during those weeks, so no version of the calendar ever covered those dates. Everything either side is intact."+
+    "<br><br><strong>"+E.length.toLocaleString()+" shows</strong> across "+Object.keys(VENUES).length+" rooms and 96 nights, de-duplicated across every published version. Where the same show appeared in several versions, the most recent listing wins.";
+  buildChips();render(true);
+  window.addEventListener("resize",measure);
+}).catch(e=>{
+  document.getElementById("list").innerHTML='<div class="empty">Could not load the archive data ('+esc(String(e))+').</div>';
+});
+</script>
+</body>
+</html>
