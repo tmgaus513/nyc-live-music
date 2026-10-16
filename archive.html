@@ -206,11 +206,11 @@ fetch("./archive.json").then(r=>r.json()).then(j=>{
   E=j.events;VENUES=j.venues;
   Object.keys(VENUES).forEach(k=>active.add(k));
   const ds=E.map(e=>e.d).sort();
-  META={range:fmtDate(ds[0]).replace(/^\w+, /,"")+" – "+fmtDate(ds[ds.length-1]).replace(/^\w+, /,""),snapshots:13};
+  META={range:fmtDate(ds[0]).replace(/^\w+, /,"")+" – "+fmtDate(ds[ds.length-1]).replace(/^\w+, /,""),snapshots:(j.snapshots&&j.snapshots.length)||0,nights:new Set(ds).size};
   document.getElementById("note").innerHTML=
     "<strong>What this is.</strong> Every show that has appeared on this calendar, kept as it was listed at the time — same venue, same source, same price. Shows are not re-checked after the fact, so a price here is what the venue published then, and old ticket links may no longer resolve."+
     "<br><br><strong>One gap.</strong> Nothing is recorded for <strong>Sep 26 – Oct 6, 2026</strong>. The weekly refresh was firing but failing silently at the publish step during those weeks, so no version of the calendar ever covered those dates. Everything either side is intact."+
-    "<br><br><strong>"+E.length.toLocaleString()+" shows</strong> across "+Object.keys(VENUES).length+" rooms and 96 nights, de-duplicated across every published version. Where the same show appeared in several versions, the most recent listing wins.";
+    "<br><br><strong>"+E.length.toLocaleString()+" shows</strong> across "+Object.keys(VENUES).length+" rooms and "+META.nights+" nights, de-duplicated across every published version. Where the same show appeared in several versions, the most recent listing wins.";
   buildChips();render(true);
   window.addEventListener("resize",measure);
 }).catch(e=>{
